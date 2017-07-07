@@ -45,7 +45,19 @@
                     <select name="choixBis" id="choixBis">
                         <option value="11">Cognac</option>
                         <option value="1">Paris</option>
+                        <option value="2">Amiens</option>
+                        <option value="3">Bordeaux</option>
+                        <option value="4">Montpellier</option>
+                        <option value="5">Biarritz</option>
+                        <option value="6">Lille</option>
+                        <option value="7">Perpignan</option>
+                        <option value="8">Nantes</option>
+                        <option value="9">Vannes</option>
                         <option value="10">Brest</option>
+                        <option value="12">Compiègne</option>
+                        <option value="13">Le Havre</option>
+                        <option value="14">Marseille</option>
+                        <option value="15">Lyon</option>
                     </select>
                     <button onclick="javascript:retour();"> Cliquez ici </button>
                 </div>

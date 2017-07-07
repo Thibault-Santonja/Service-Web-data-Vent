@@ -1,0 +1,1 @@
+Service web récupérant de la data météo (vent) et l'affiche ensuite suivant certaines villes.
