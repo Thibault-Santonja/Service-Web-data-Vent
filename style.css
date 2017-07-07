@@ -1,0 +1,74 @@
+
+
+/*----------------------------
+------------FONT--------------
+----------------------------*/
+@font-face    /*ajout de polices, une pour les titres, une pour le texte*/
+{
+    font-family: 'font';
+    src: url('polices/GeosansLight.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'titre';
+    src: url('polices/source-code-pro-light.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/*----------------------------
+------------GENERAL-----------
+----------------------------*/
+
+li {list-style-type: none}  /*pas de points ou autres decorations avant chaque element de la liste*/
+
+h2, h1 {text-transform: uppercase}  /*titre tranformés en majuscules*/
+
+h1 {font-family: 'titre', /*'Jazz LET',*/ sans-serif}
+
+h1 {text-align: center}
+
+/* utilisation de la police font (définie dans style.css) pour tous les éléments de saisie*/
+p, table, tr, td, a, label, input, textarea, select {font-family: 'font'}
+
+header {
+  border-bottom: 1px rgb(136,88,172) solid;
+  color: rgb(130,157,181);
+}
+
+footer {
+  background-color: rgb(136,88,172);
+  color: white;
+}
+
+.data {
+  display: flex;    /*technique de display puissante permettant de faire en gros les mêmes choses que simplegrid*/
+  flex-flow: row;  /*row pour alignement horizontal, wrap pour retour à la ligne*/
+  justify-content: space-around;    /*espacement entre chaque div et avant / après les divs*/
+  align-items: center;
+  max-width: 350px;
+  margin: auto
+}
+
+main {
+  max-width:400px;
+  margin: auto;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+a {
+  color: purple;
+  text-decoration: none;
+}
+
+footer {text-align: center}
+
+.data p {
+  width: 65px;
+  text-align: center;
+}
