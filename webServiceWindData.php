@@ -3,6 +3,29 @@
 header('Content-Type: application/json');
 
 
+class WindData {
+	protected $_annee;
+	protected $_mois;
+	protected $_jour;
+	protected $_heure;
+	protected $_vent;
+
+	public function __construct($annee, $mois, $jour, $heure, $vent) {
+		$this->_annee = $annee;
+		$this->_mois = $mois;
+		$this->_jour = $jour;
+		$this->_heure = $heure;
+		$this->_vent = $vent;
+	}
+
+	public function getYear() {return $this->_annee;}
+	public function getMonth() {return $this->_mois;}
+	public function getDay() {return $this->_jour;}
+	public function getHour() {return $this->_heure;}
+	public function getWind() {return $this->_vent;}
+}
+
+
 class ListData {
 	protected $_arrayData;
 
@@ -139,11 +162,17 @@ function getUrlContent($valeur){
 	                if ($data[$i] == '<' && $data[$i+1] == 't' && $data[$i+2] == 'r' && $data[$i+3] == '>') {       //les balises <tr> correspondent à une nouvelle ligne du tableau
 	                    for ($y=0; $y < $l-1; $y++) $sumData += $ligne[$y];   //sachant que l'on a fini la ligne précédente, on additionnne donc toute les datas récupérés de la ligne précédente
 				        if ($k>1) {												//si k>1, cela signifie que l'on a sauté les deux premières lignes du tableau qui ne nous interessent pas
-				        	$listWindData[$k-2][0] = $annee;					//stockage de la data à k-2 (car on saute les deux premières lignes inutiles) et à la colonne souhaitée
+
+
+							$temporaire = new WindData($annee, $mois, $jour, $heure, round((($sumData/($l-1))+0.0)*10)/10);
+				        	$temporaire = (array)$temporaire;
+				        	$arrayList[$k-2] = $temporaire;
+
+				        	/*$listWindData[$k-2][0] = $annee;					//stockage de la data à k-2 (car on saute les deux premières lignes inutiles) et à la colonne souhaitée
 				        	$listWindData[$k-2][1] = $mois;
 				        	$listWindData[$k-2][2] = $jour;
 				        	$listWindData[$k-2][3] = $heure;
-				        	$listWindData[$k-2][4] = round((($sumData/($l-1))+0.0)*10)/10;		//on fait la moyenne de la somme de data que l'on stock dans le tableau
+				        	$listWindData[$k-2][4] = round((($sumData/($l-1))+0.0)*10)/10;*/		//on fait la moyenne de la somme de data que l'on stock dans le tableau
 				        }
 	                    $k++;  													//on avance d'un ligne
 	                    $sumData = 0;											//RAZ de la somme des datas puisque l'on est passé à une nouvelle ligne
@@ -173,8 +202,12 @@ function getUrlContent($valeur){
 		//fermeture
 		curl_close($ch);
 
-		$liste_tab_data	= new ListData($listWindData);
-		return json_encode($liste_tab_data->getArray());
+		//$liste_tab_data	= new ListData($listWindData);
+		//return json_encode($liste_tab_data->getArray());
+
+		$liste_obj_data = new ListData($arrayList);
+		return str_replace('*_', '', str_replace('\u0000', '', json_encode($liste_obj_data->getArray())));
+
 	}
 }
 
