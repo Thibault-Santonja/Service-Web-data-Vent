@@ -50,12 +50,20 @@ footer {
   flex-flow: row;  /*row pour alignement horizontal, wrap pour retour à la ligne*/
   justify-content: space-around;    /*espacement entre chaque div et avant / après les divs*/
   align-items: center;
-  max-width: 350px;
+  max-width: 700px;
   margin: auto
 }
 
 main {
-  max-width:400px;
+  display: flex;    /*technique de display puissante permettant de faire en gros les mêmes choses que simplegrid*/
+  flex-flow: column;  /*row pour alignement horizontal, wrap pour retour à la ligne*/
+  justify-content: space-around;    /*espacement entre chaque div et avant / après les divs*/
+  align-items: center;
+  margin: auto;
+}
+
+#main {
+  max-width: 800px;
   margin: auto;
   margin-top: 32px;
   margin-bottom: 32px;
@@ -66,9 +74,9 @@ a {
   text-decoration: none;
 }
 
-footer {text-align: center}
-
-.data p {
-  width: 65px;
-  text-align: center;
-}
+footer, #graph {text-align: center}
+p {display: inline-block}
+.data p {text-align: center}
+#contenu {max-width: 660px}
+.pdate {width: 80%}
+.pdata {width: 17%}

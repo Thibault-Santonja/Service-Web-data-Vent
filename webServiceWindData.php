@@ -25,6 +25,18 @@ class WindData {
 	public function getWind() {return $this->_vent;}
 }
 
+class WindDataEnMS {
+	protected $_period;
+	protected $_vent;
+
+	public function __construct($ms, $vent) {
+		$this->_period = $ms;
+		$this->_vent = $vent;
+	}
+
+	public function getMS() {return $this->_period;}
+	public function getWind() {return $this->_vent;}
+}
 
 class ListData {
 	protected $_arrayData;
@@ -127,6 +139,10 @@ function getUrlContent($valeur){
 			break;
 	}
 	
+
+	date_default_timezone_set('Europe/Paris');
+
+
 	$url = 'http://www.meteociel.fr/modeles/gefs_table.php?x=' . $x . '&y=' . $y . '&run=0&ext=fr&mode=11&sort=0';		//création d'une variable contenant l'url de la page
 
 	//initialisation d'une session
@@ -155,6 +171,7 @@ function getUrlContent($valeur){
 	    $flag = 0;                          //permettra de connaitre la fin du tableau de la page web, contenant la data
 	    $sumData = 0;						//contient la somme de toute les data d'une ligne pour ensuite en faire la moyenne
 	    $listWindData = array();			//tableau a de dimension stockant l'année, le mois, le jours, l'heure et la moyenne des vent 
+	    $listWindDataEnMS = array();
 	    while ($flag != 1) {				//le flag correspondant à la fin du tableau de data qui nous intéresse, tant que l'on est pas à la fin, on continu
 	        $i++;
 	        if (($data[$i] == "=") && ($data[$i+2] == "g") && ($data[$i+3] == "e") && ($data[$i+4] == "f") && ($data[$i+5] == "s") && ($data[$i+7] == ">"))   //si on trouve la class gefs, c'est que nous sommes dans le bon tableau, contenant toutes les datas sur les vents, qui nous intéresse donc on rentre dans le nouveau while
@@ -164,9 +181,13 @@ function getUrlContent($valeur){
 				        if ($k>1) {												//si k>1, cela signifie que l'on a sauté les deux premières lignes du tableau qui ne nous interessent pas
 
 
-							$temporaire = new WindData($annee, $mois, $jour, $heure, round((($sumData/($l-1))+0.0)*10)/10);
+							//$temporaire = new WindData($annee, $mois, $jour, $heure, round((($sumData/($l-1))+0.0)*10)/10);
+				        	//$temporaire = (array)$temporaire;
+				        	//$arrayList[$k-2] = $temporaire;
+				        	$dateMS = $annee . '-' . $mois . '-' . $jour;
+				        	$temporaire = new WindDataEnMS((strtotime($dateMS)+$heure*3600)*1000, round((($sumData/($l-1))+0.0)*10)/10);
 				        	$temporaire = (array)$temporaire;
-				        	$arrayList[$k-2] = $temporaire;
+				        	$listWindDataEnMS[$k-2] = $temporaire;
 
 				        	/*$listWindData[$k-2][0] = $annee;					//stockage de la data à k-2 (car on saute les deux premières lignes inutiles) et à la colonne souhaitée
 				        	$listWindData[$k-2][1] = $mois;
@@ -205,7 +226,11 @@ function getUrlContent($valeur){
 		//$liste_tab_data	= new ListData($listWindData);
 		//return json_encode($liste_tab_data->getArray());
 
-		$liste_obj_data = new ListData($arrayList);
+		//$liste_obj_data = new ListData($arrayList);
+		//return str_replace('*_', '', str_replace('\u0000', '', json_encode($liste_obj_data->getArray())));
+
+
+		$liste_obj_data = new ListData($listWindDataEnMS);
 		return str_replace('*_', '', str_replace('\u0000', '', json_encode($liste_obj_data->getArray())));
 
 	}
