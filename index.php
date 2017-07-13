@@ -22,74 +22,42 @@
         <main>
 
             <script type="text/javascript"><!--
-                /*function testdate(timestamp_data) {
-                    var annee = 2017;
-                    var mois = 07;
-                    var jour = 11;
-                    var heure = 12;
-                    var periodeA = new Date(annee, mois, jour, heure, 00, 00, 000);
-                    periodeA = periodeA.getTime();
-                    var periodeB = new Date(annee, mois, jour+5, heure, 00, 00, 000);
-                    periodeB = periodeB.getTime();
-                    var periodeC = new Date(annee, mois, jour+10, heure, 00, 00, 000);
-                    periodeC = periodeC.getTime();
-                    var periodeD = new Date(annee, mois, jour+15, heure, 00, 00, 000);
-                    periodeD = periodeD.getTime();
-                    var periodeE = new Date(annee, mois, jour+20, heure, 00, 00, 000);
-                    periodeE = periodeE.getTime();
 
-                    console.log(periodeA);
-
-
-                    var timestamp_data = [
-                     {"period": periodeA, "licensed": 10},
-                     {"period": periodeB, "licensed": 11},
-                     {"period": periodeC, "licensed": 13},
-                     {"period": periodeD, "licensed": 12},
-                     {"period": periodeE, "licensed": 9}
-                    ];
-
-                    Morris.Line({
-                      element: 'graph',
-                      data: timestamp_data,
-                      xkey: 'period',
-                      ykeys: ['licensed'],
-                      labels: ['licensed'],
-                      dateFormat: function (x) { return new Date(x).toDateString(); }
-                    });
-                };*/
-                
                 function retour() {
                     var selectElmt = document.getElementById("choixBis");
                     var data = selectElmt.options[selectElmt.selectedIndex].value;
                     $.ajax({
                         type: "GET",
                         url: "webServiceWindData.php",
-                        data: 'data=' + data,
+                        data: 'data=' + data,           //envoi de la ville saisie par l'utilisateur
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (response) {
                             var WindData = response;
-                            $('#graph').empty();
-                            $('#contenu').empty();
-                            //$.each(WindData, function (index, WindData) {$('#contenu').append('<div class="data"><p>' + WindData.annee + '</p><p>' + WindData.mois + '</p><p>' + WindData.jour + '</p><p>' + WindData.heure + '</p><p>' + WindData.vent + '</p></div>');});
+                            $('#graph').empty();      //vidage de la div graph  
+                            /*$('#contenu').empty();
+                            //$.each(WindData, function (index, WindData) {$('#contenu').append('<div class="data"><p>' + WindData.annee + '</p><p>' + WindData.mois + '</p><p>' + WindData.jour + '</p><p>' + WindData.heure + '</p><p>' + WindData.vent + '</p></div>');});   //ancien retour du service
                             $.each(WindData, function (index, WindData) {
                                 var date = new Date(WindData.period);
 
                                 $('#contenu').append('<div class="data"><p class="pdate">' + date.toLocaleDateString("fr-FR", {weekday: "long", year: "numeric", month: "long", day: "numeric"}) + '</p><p class="pdata">' + WindData.vent + '</p></div>');
-                            });
-                            WindData = response;
+                            });     //affichage d'un tableau de data
+                            WindData = response;*/
 
-                            Morris.Line({
+                            Morris.Line({       //affichage du graphique de data
                               element: 'graph',
                               data: WindData,
                               xkey: 'period',
+                              xLabelFormat: function (x) {
+                                return new Date(x).toLocaleDateString("fr-FR", {year: "numeric", month: "long", day: "numeric"})},
+                              xLabelAngle: 30,
                               ykeys: ['vent'],
-                              labels: ['vent'],
-                              dateFormat: function (x) { return new Date(x).toLocaleDateString("fr-FR", {weekday: "long", year: "numeric", month: "long", day: "numeric"});}
+                              labels: ['vent (m/s)'],
+                              dateFormat: function (x) { return new Date(x).toLocaleDateString("fr-FR", {weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric"})}
                             });
                         },
                         failure: function (msg) {
+                            $('#contenu').empty();
                             console.log (msg);
                             $('#contenu').text(msg);
                         }
@@ -106,23 +74,45 @@
                     <select name="choixBis" id="choixBis">
                         <option value="11">Cognac</option>
                         <option value="2">Amiens</option>
+                        <option value="29">Aurillac</option>
+                        <option value="21">Belfort</option>
                         <option value="5">Biarritz</option>
                         <option value="3">Bordeaux</option>
+                        <option value="30">Bourges</option>
                         <option value="10">Brest</option>
+                        <option value="35">Caen</option>
+                        <option value="36">Cherbourg</option>
+                        <option value="26">Clermont-Ferrand</option>
                         <option value="12">Compiègne</option>
+                        <option value="20">Dijon</option>
+                        <option value="22">Grenoble</option>
                         <option value="13">Le Havre</option>
+                        <option value="33">Le Mans</option>
                         <option value="6">Lille</option>
+                        <option value="27">Limoge</option>
                         <option value="15">Lyon</option>
                         <option value="14">Marseille</option>
                         <option value="4">Montpellier</option>
+                        <option value="18">Nancy</option>
                         <option value="8">Nantes</option>
+                        <option value="23">Nice</option>
+                        <option value="31">Orléans</option>
                         <option value="1">Paris</option>
                         <option value="7">Perpignan</option>
+                        <option value="16">Reims</option>
+                        <option value="34">Rennes</option>
+                        <option value="37">Rouen</option>
+                        <option value="19">Strasbourg</option>
+                        <option value="28">Tarbes</option>
+                        <option value="25">Toulouse</option>
+                        <option value="32">Tours</option>
+                        <option value="17">Troyes</option>
+                        <option value="24">Valence</option>
                         <option value="9">Vannes</option>
                     </select>
                     <button onclick="javascript:retour();"> Cliquez ici </button>
                 </div>
-                
+
                 <div id="contenu"></div>
             </div>
         </main>

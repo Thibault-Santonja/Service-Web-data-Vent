@@ -25,6 +25,9 @@ class WindData {
 	public function getWind() {return $this->_vent;}
 }
 
+
+
+
 class WindDataEnMS {
 	protected $_period;
 	protected $_vent;
@@ -37,6 +40,9 @@ class WindDataEnMS {
 	public function getMS() {return $this->_period;}
 	public function getWind() {return $this->_vent;}
 }
+
+
+
 
 class ListData {
 	protected $_arrayData;
@@ -131,7 +137,139 @@ function getUrlContent($valeur){
 			$x = 510;
 			$y = 439;
 			break;
+
+		case '16':
+			#Reims : 451 255
+			$x = 451;
+			$y = 255;
+			break;
 		
+		case '17':
+			#Troyes : 459 307
+			$x = 459;
+			$y = 307;
+			break;
+
+		case '18':
+			#Nancy : 528 277
+			$x = 528;
+			$y = 277;
+			break;
+
+		case '19':
+			#Strasbourg : 590 281
+			$x = 590;
+			$y = 281;
+			break;
+
+		case '20':
+			#Dijon : 503 358
+			$x = 503;
+			$y = 358;
+			break;
+
+		case '21':
+			#Belfort : 567 335
+			$x = 567;
+			$y = 335;
+			break;
+
+		case '22':
+			#Grenoble : 533 473
+			$x = 533;
+			$y = 473;
+			break;
+
+		case '23':
+			#Nice : 604 551
+			$x = 604;
+			$y = 551;
+			break;
+
+		case '24':
+			#Valence : 501 487
+			$x = 501;
+			$y = 487;
+			break;
+
+		case '25':
+			#Toulouse : 367 574
+			$x = 367;
+			$y = 574;
+			break;
+
+		case '26':
+			#Clermont-Ferrand : 435 450
+			$x = 435;
+			$y = 450;
+			break;
+
+		case '27':
+			#Limoge : 359 448
+			$x = 358;
+			$y = 448;
+			break;
+
+		case '28':
+			#Tarbes : 315 595
+			$x = 315;
+			$y = 395;
+			break;
+
+		case '29':
+			#Aurillac : 407 499
+			$x = 407;
+			$y = 499;
+			break;
+
+		case '30':
+			#Bourges : 402 381
+			$x = 402;
+			$y = 381;
+			break;
+
+		case '31':
+			#Orléans : 383 338
+			$x = 383;
+			$y = 338;
+			break;
+
+		case '32':
+			#Tours : 340 366
+			$x = 340;
+			$y = 366;
+			break;
+
+		case '33':
+			#Le Mans : 320 331
+			$x = 320;
+			$y = 333;
+			break;
+
+		case '34':
+			#Rennes : 253 321
+			$x = 253;
+			$y = 321;
+			break;
+
+		case '35':
+			#Caen : 298 265
+			$x = 298;
+			$y = 265;
+			break;
+
+		case '36':
+			#Cherbourg : 255 243
+			$x = 255;
+			$y = 243;
+			break;
+
+		case '37':
+			#Rouen : 255 243
+			$x = 347;
+			$y = 255;
+			break;
+
 		default: 
 			# Paris : 394 285
 			$x = 394;
@@ -152,8 +290,8 @@ function getUrlContent($valeur){
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 	$data = curl_exec($ch);					//stockage du code source de la page dans une variable $data
 	//$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
